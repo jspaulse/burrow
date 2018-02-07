@@ -1,4 +1,4 @@
-// +build !arm,!386
+// +build arm 386
 // Copyright 2017 Monax Industries Limited
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,5 +18,5 @@ package architecture
 import "math"
 
 const (
-	MaxInt32 = math.MaxUint32
+	MaxInt32 = math.MaxInt32
 )
