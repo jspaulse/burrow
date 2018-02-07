@@ -1,4 +1,5 @@
 package: github.com/hyperledger/burrow
+repo: https://github.com/jspaulse/burrow.git
 import:
 - package: github.com/spf13/cobra
 - package: github.com/spf13/viper
@@ -29,8 +30,13 @@ import:
   version: ^0.11.0
 - package: github.com/streadway/simpleuuid
 - package: github.com/Graylog2/go-gelf
+- package: github.com/tendermint/go-wire/data
+  version: c1c9a57ab8038448ddea1714c0698f8051e5748c
+- package: github.com/tendermint/go-rpc
 - package: github.com/golang/protobuf
   version: 925541529c1fa6821df4e44ce2723319eb2be768
+- package: github.com/tendermint/log15
+  version: ae0f3d6450da9eac7074b439c8e1c3cabf0d5ce6
 - package: github.com/tendermint/tmlibs
   version: e4ef2835f0081c2ece83b9c1f777cf071f956e81
   subpackages:

@@ -9,7 +9,7 @@
 SHELL := /bin/bash
 REPO := $(shell pwd)
 GOFILES_NOVENDOR := $(shell find ${REPO} -type f -name '*.go' -not -path "${REPO}/vendor/*")
-PACKAGES_NOVENDOR := $(shell go list github.com/hyperledger/burrow/... | grep -v /vendor/)
+PACKAGES_NOVENDOR := $(shell go list github.com/jspaulse/burrow/... | grep -v /vendor/)
 VERSION := $(shell cat ${REPO}/version/version.go | tail -n 1 | cut -d \  -f 4 | tr -d '"')
 VERSION_MIN := $(shell echo ${VERSION} | cut -d . -f 1-2)
 COMMIT_SHA := $(shell echo `git rev-parse --short --verify HEAD`)
@@ -24,7 +24,7 @@ greet:
 ### Formatting, linting and vetting
 
 # check the code for style standards; currently enforces go formatting.
-# display output first, then check for success	
+# display output first, then check for success
 .PHONY: check
 check:
 	@echo "Checking code for formatting style compliance."
@@ -44,7 +44,7 @@ fmt:
 	@gofmt -l -w ${GOFILES_NOVENDOR}
 
 # lint installs golint and prints recommendations for coding style.
-lint: 
+lint:
 	@echo "Running lint checks."
 	go get -u github.com/golang/lint/golint
 	@for file in $(GOFILES_NOVENDOR); do \
@@ -70,6 +70,7 @@ megacheck:
 # erase vendor wipes the full vendor directory
 .PHONY: erase_vendor
 erase_vendor:
+	@glide cc
 	rm -rf ${REPO}/vendor/
 
 # install vendor uses glide to install vendored dependencies
@@ -96,6 +97,9 @@ build_race:	check build_race_db build_race_client build_race_keys
 # build burrow
 .PHONY: build_db
 build_db:
+	@rm -rf ${GOPATH}/src/github.com/hyperledger/burrow 
+	@mkdir -p ${GOPATH}/src/github.com/hyperledger
+	@ln -sfn ${REPO} ${GOPATH}/src/github.com/hyperledger/burrow
 	go build -o ${REPO}/target/burrow-${COMMIT_SHA} ./cmd/burrow
 
 # build burrow-client
@@ -153,4 +157,4 @@ test_docker_db: check
 # clean removes the target folder containing build artefacts
 .PHONY: clean
 clean:
-	-rm -r ./target 
+	-rm -r ./target
