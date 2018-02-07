@@ -29,6 +29,8 @@ import:
   version: ^0.11.0
 - package: github.com/streadway/simpleuuid
 - package: github.com/Graylog2/go-gelf
+- package: github.com/golang/protobuf
+  version: 925541529c1fa6821df4e44ce2723319eb2be768
 - package: github.com/tendermint/tmlibs
   version: e4ef2835f0081c2ece83b9c1f777cf071f956e81
   subpackages:
