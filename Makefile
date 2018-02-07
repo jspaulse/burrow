@@ -70,7 +70,7 @@ megacheck:
 # erase vendor wipes the full vendor directory
 .PHONY: erase_vendor
 erase_vendor:
-	@glide cc
+	glide cc
 	rm -rf ${REPO}/vendor/
 
 # install vendor uses glide to install vendored dependencies
@@ -97,10 +97,19 @@ build_race:	check build_race_db build_race_client build_race_keys
 # build burrow
 .PHONY: build_db
 build_db:
-	@rm -rf ${GOPATH}/src/github.com/hyperledger/burrow 
+	@rm -rf ${GOPATH}/src/github.com/hyperledger/burrow
 	@mkdir -p ${GOPATH}/src/github.com/hyperledger
 	@ln -sfn ${REPO} ${GOPATH}/src/github.com/hyperledger/burrow
 	go build -o ${REPO}/target/burrow-${COMMIT_SHA} ./cmd/burrow
+
+## BEGIN TESTING HERE ##
+########################
+.PHONY: test_build
+test_build:
+	@rm -rf ${GOPATH}/src/github.com/hyperledger/burrow
+	@mkdir -p ${GOPATH}/src/github.com/hyperledger
+	@ln -sfn ${REPO} ${GOPATH}/src/github.com/hyperledger/burrow
+	GOARCH=386 go build --ldflags '-extldflags "static"' -o ${REPO}/target/burrow-386 ./cmd/burrow
 
 # build burrow-client
 .PHONY: build_client
@@ -157,4 +166,5 @@ test_docker_db: check
 # clean removes the target folder containing build artefacts
 .PHONY: clean
 clean:
-	-rm -r ./target
+	@rm -rf ${GOPATH}/src/github.com/hyperledger/burrow
+	@rm -rf target/*
