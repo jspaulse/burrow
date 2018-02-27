@@ -42,5 +42,5 @@ import:
   subpackages:
   - clist
 - package: github.com/tendermint/tendermint
-  repo: https://github.com/jspaulse/tendermint.git
+  repo: https://github.com/lo3energy/tendermint.git
   version: release-0.17
