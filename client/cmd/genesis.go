@@ -35,6 +35,9 @@ var GenesisGenCmd = &cobra.Command{
 	Long:  "burrow-client make-genesis creates a genesis.json with known inputs",
 
 	Run: func(cmd *cobra.Command, args []string) {
+		// TODO: broken!  Without additional argument (dummy as seen below)
+		// function panics
+		// ./burrow-client make-genesis dummy --accounts accounts.csv --validators validators.csv
 		// TODO refactor to not panic
 		genesisFile, err := genesis.GenerateKnown(args[0], AccountsPathFlag, ValidatorsPathFlag)
 		if err != nil {
