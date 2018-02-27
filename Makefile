@@ -102,14 +102,19 @@ build_db:
 	@ln -sfn ${REPO} ${GOPATH}/src/github.com/hyperledger/burrow
 	go build -o ${REPO}/target/burrow-${COMMIT_SHA} ./cmd/burrow
 
-## BEGIN TESTING HERE ##
-########################
-.PHONY: test_build
-test_build:
+.PHONY: build_db_386
+build_db_386:
 	@rm -rf ${GOPATH}/src/github.com/hyperledger/burrow
 	@mkdir -p ${GOPATH}/src/github.com/hyperledger
 	@ln -sfn ${REPO} ${GOPATH}/src/github.com/hyperledger/burrow
 	GOARCH=386 go build --ldflags '-extldflags "static"' -o ${REPO}/target/burrow-386 ./cmd/burrow
+
+.PHONY: build_client_386
+build_client_386:
+	@rm -rf ${GOPATH}/src/github.com/hyperledger/burrow
+	@mkdir -p ${GOPATH}/src/github.com/hyperledger
+	@ln -sfn ${REPO} ${GOPATH}/src/github.com/hyperledger/burrow
+	GOARCH=386 go build --ldflags '-extldflags "static"' -o ${REPO}/target/burrow-client-386 ./client/cmd/burrow-client
 
 # build burrow-client
 .PHONY: build_client
